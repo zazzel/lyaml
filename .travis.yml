@@ -1,4 +1,7 @@
 language: python
+arch:
+ - amd64
+ - ppc64le
 
 sudo: false
 
@@ -10,7 +13,13 @@ env:
     - VLUA="lua=5.1"
     - VLUA="luajit=2.1"
     - VLUA="luajit=2.0"
-
+jobs:
+  exclude:
+    - arch: ppc64le
+      env: VLUA="luajit=2.1"
+    - arch: ppc64le
+      env: VLUA="luajit=2.0" 
+          
 before_install:
   - pip install hererocks
   - hererocks here --luarocks 3 --$VLUA --patch
